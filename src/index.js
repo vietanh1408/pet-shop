@@ -10,6 +10,10 @@ const environments = require("./constants/environment");
 const app = express();
 
 const authRoute = require("./routes/auth.route");
+const userRoute = require("./routes/user.route");
+const productRoute = require("./routes/product.route");
+const categoryRoute = require("./routes/category.route");
+const orderRoute = require("./routes/order.route");
 
 app.use(helmet());
 app.use(morgan("tiny"));
@@ -19,6 +23,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: false }));
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
+app.use("/api/categories", categoryRoute);
+app.use("/api/orders", orderRoute);
 
 connectDB();
 

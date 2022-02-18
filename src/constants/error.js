@@ -5,4 +5,5 @@ module.exports.messages = {
     AUTHORIZATION_ERROR: "Vui lòng đăng nhập để tiếp tục",
     USERNAME_NOT_EXIST: "Tên đăng nhập không tồn tại",
     INVALID_PASSWORD: "Mật khẩu không chính xác",
+    USER_EXIST: "Người dùng đã tồn tại",
 };

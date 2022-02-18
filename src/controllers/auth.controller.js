@@ -1,8 +1,8 @@
 const User = require("../models/User");
 const { messages } = require("../constants/error");
-const bcrypt = require("bcryptjs");
 const { createAccessToken } = require("../helpers/generateToken");
 const environments = require("../constants/environment");
+const { hashPassword, comparePassword } = require("../helpers/hashPassword");
 
 module.exports.register = async(req, res) => {
     try {
@@ -27,14 +27,13 @@ module.exports.register = async(req, res) => {
         }
 
         // hashed password
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(req.body.password, salt);
+        const hashedPassword = await hashPassword(req.body.password);
 
         // create user
         const user = new User({
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password,
+            password: hashedPassword,
         });
 
         const newUser = await user.save();
@@ -74,7 +73,8 @@ module.exports.login = async(req, res) => {
         }
 
         // check password
-        const validPass = await bcrypt.compare(req.body.password, user.password);
+        const validPass = await comparePassword(req.body.password, user.password);
+
         if (!validPass) {
             return res.status(400).json({
                 success: false,
