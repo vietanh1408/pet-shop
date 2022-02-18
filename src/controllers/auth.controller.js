@@ -1,12 +1,11 @@
 const User = require("../models/User");
 const { messages } = require("../constants/error");
 const { createAccessToken } = require("../helpers/generateToken");
-const environments = require("../constants/environment");
 const { hashPassword, comparePassword } = require("../helpers/hashPassword");
+const environments = require("../constants/environment");
 
 module.exports.register = async(req, res) => {
     try {
-        // check email exist
         const existedEmail = await User.findOne({ email: req.body.email });
 
         if (existedEmail) {
@@ -16,7 +15,6 @@ module.exports.register = async(req, res) => {
             });
         }
 
-        // check username
         const existedUsername = await User.findOne({ username: req.body.username });
 
         if (existedUsername) {
@@ -26,10 +24,8 @@ module.exports.register = async(req, res) => {
             });
         }
 
-        // hashed password
         const hashedPassword = await hashPassword(req.body.password);
 
-        // create user
         const user = new User({
             username: req.body.username,
             email: req.body.email,
@@ -38,7 +34,6 @@ module.exports.register = async(req, res) => {
 
         const newUser = await user.save();
 
-        // create access token
         const accessToken = await createAccessToken(
             newUser._id,
             environments.SECRET_TOKEN
@@ -60,7 +55,6 @@ module.exports.register = async(req, res) => {
     }
 };
 
-// login
 module.exports.login = async(req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username });
@@ -72,7 +66,6 @@ module.exports.login = async(req, res) => {
             });
         }
 
-        // check password
         const validPass = await comparePassword(req.body.password, user.password);
 
         if (!validPass) {
@@ -82,7 +75,6 @@ module.exports.login = async(req, res) => {
             });
         }
 
-        // create access token
         const accessToken = await createAccessToken(
             user._id,
             environments.SECRET_TOKEN

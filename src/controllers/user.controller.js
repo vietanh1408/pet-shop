@@ -1,14 +1,25 @@
 const { messages } = require("../constants/error");
 const User = require("../models/User");
 const { hashPassword } = require("../helpers/hashPassword");
+const Pagination = require("../helpers/pagination");
 
 module.exports.users = async(req, res) => {
     try {
-        const users = await User.find({}).select(["-password"]);
+        const userQuery = new Pagination(
+            User.find({}).select(["-password"]),
+            req.query
+        ).paginating();
+
+        const users = await userQuery.query.sort({ username: 1 });
+
+        const total = await User.countDocuments({});
 
         return res.status(200).json({
             success: true,
-            users,
+            result: {
+                users,
+                total,
+            },
         });
     } catch (e) {
         return res.status(500).json({
@@ -46,7 +57,6 @@ module.exports.create = async(req, res) => {
             });
         }
 
-        // hash password
         const hashedPassword = await hashPassword(req.body.password);
 
         const user = new User({

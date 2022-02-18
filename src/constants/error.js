@@ -8,4 +8,5 @@ module.exports.messages = {
     INVALID_PASSWORD: "Mật khẩu không chính xác",
     USER_EXIST: "Người dùng đã tồn tại",
     PRODUCT_NOT_EXIST: "Sản phẩm không tồn tại",
+    CATEGORY_NOT_EXIST: "Danh mục không tồn tại",
 };
