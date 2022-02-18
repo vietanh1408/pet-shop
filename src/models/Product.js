@@ -3,6 +3,7 @@ const { Schema, Types, model } = require("mongoose");
 const ProductSchema = new Schema({
     name: {
         type: String,
+        unique: true,
         max: 1024,
     },
     price: {
