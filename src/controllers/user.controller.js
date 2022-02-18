@@ -2,7 +2,7 @@ const { messages } = require("../constants/error");
 const User = require("../models/User");
 const { hashPassword } = require("../helpers/hashPassword");
 
-module.exports.getUsers = async(req, res) => {
+module.exports.users = async(req, res) => {
     try {
         const users = await User.find({}).select(["-password"]);
 
@@ -18,7 +18,7 @@ module.exports.getUsers = async(req, res) => {
     }
 };
 
-module.exports.getOne = async(req, res) => {
+module.exports.user = async(req, res) => {
     try {
         const user = await User.findById(req.params.id).select(["-password"]);
 
@@ -77,7 +77,7 @@ module.exports.update = async(req, res) => {
     try {
         const updatedUser = await User.findByIdAndUpdate(
             req.body.userId, {...req.body.data }, { new: true }
-        );
+        ).select(["-password"]);
 
         if (!updatedUser) {
             return res.status(400).json({
@@ -86,11 +86,9 @@ module.exports.update = async(req, res) => {
             });
         }
 
-        const { password, ...result } = updatedUser._doc;
-
         return res.status(200).json({
             success: true,
-            user: result,
+            user: updatedUser,
         });
     } catch (e) {
         return res.status(500).json({

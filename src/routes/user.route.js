@@ -6,9 +6,9 @@ const verifyToken = require("../middleware/auth.middleware");
 
 const controller = require("../controllers/user.controller");
 
-router.get("/", verifyToken, controller.getUsers);
+router.get("/", verifyToken, controller.users);
 
-router.get("/:id", verifyToken, controller.getOne);
+router.get("/:id", verifyToken, controller.user);
 
 router.post("/", verifyToken, controller.create);
 
