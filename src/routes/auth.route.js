@@ -10,4 +10,7 @@ router.post("/register", controller.register);
 // login
 router.post("/login", controller.login);
 
+// login admin
+router.post("/login_admin", controller.loginAdmin);
+
 module.exports = router;

@@ -9,4 +9,5 @@ module.exports.messages = {
     USER_EXIST: "Người dùng đã tồn tại",
     PRODUCT_NOT_EXIST: "Sản phẩm không tồn tại",
     CATEGORY_NOT_EXIST: "Danh mục không tồn tại",
+    AUTHORIZATION_ADMIN_ERROR: "Bạn không được quyền truy cập",
 };

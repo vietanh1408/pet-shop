@@ -57,7 +57,50 @@ module.exports.register = async(req, res) => {
 
 module.exports.login = async(req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username });
+        const user = await User.findOne({
+            username: req.body.username,
+            role: 0,
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: messages.USERNAME_NOT_EXIST,
+            });
+        }
+
+        const validPass = await comparePassword(req.body.password, user.password);
+
+        if (!validPass) {
+            return res.status(400).json({
+                success: false,
+                message: messages.INVALID_PASSWORD,
+            });
+        }
+
+        const accessToken = await createAccessToken(
+            user._id,
+            environments.SECRET_TOKEN
+        );
+
+        const { password, ...result } = user._doc;
+
+        return res.status(200).json({
+            success: true,
+            accessToken,
+            user: result,
+        });
+    } catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: messages.SERVER_ERROR,
+        });
+    }
+};
+
+module.exports.loginAdmin = async(req, res) => {
+    try {
+        const user = await User.findOne({ username: req.body.username, role: 1 });
 
         if (!user) {
             return res.status(400).json({
