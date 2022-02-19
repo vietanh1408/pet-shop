@@ -32,6 +32,6 @@ app.use("/api/profile", profileRoute);
 
 connectDB();
 
-app.listen(environments.PORT, () => {
+app.listen(environments.PORT || 4000, () => {
     console.log(`Server listening on port ${environments.PORT}`);
 });
