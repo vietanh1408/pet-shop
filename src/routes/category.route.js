@@ -8,9 +8,9 @@ const verifyTokenAdmin = require("../middleware/auth_admin.middleware");
 
 const controller = require("../controllers/category.controller");
 
-router.get("/", verifyToken, controller.categories);
+router.get("/", controller.categories);
 
-router.get("/:id", verifyToken, controller.category);
+router.get("/:id", controller.category);
 
 router.post("/", verifyToken, verifyTokenAdmin, controller.create);
 

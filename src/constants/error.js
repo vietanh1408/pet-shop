@@ -7,7 +7,11 @@ module.exports.messages = {
     USERNAME_NOT_EXIST: "Tên đăng nhập không tồn tại",
     INVALID_PASSWORD: "Mật khẩu không chính xác",
     USER_EXIST: "Người dùng đã tồn tại",
+    USER_NOT_EXIST: "Nguơi dùng không tồn tại",
     PRODUCT_NOT_EXIST: "Sản phẩm không tồn tại",
     CATEGORY_NOT_EXIST: "Danh mục không tồn tại",
     AUTHORIZATION_ADMIN_ERROR: "Bạn không được quyền truy cập",
+    ORDER_NOT_EXIST: "Đơn hàng không tồn tại",
+    REQUIRED_CATEGORY: "Sản phẩm phải thuộc 1 danh mục",
+    PROCESSING_ERROR: "Có lỗi trong quá trình xử lý, vui lòng thử lại sau",
 };

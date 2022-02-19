@@ -5,7 +5,7 @@ const Pagination = require("../helpers/pagination");
 module.exports.products = async(req, res) => {
     try {
         const productQuery = new Pagination(
-            Product.find({}),
+            Product.find({}).populate("categoryId", ["name", "description", "image"]),
             req.query
         ).paginating();
 
@@ -30,7 +30,9 @@ module.exports.products = async(req, res) => {
 
 module.exports.product = async(req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id).populate(
+            "categoryId", ["name", "description", "image"]
+        );
 
         if (!product) {
             return res.status(400).json({
@@ -53,6 +55,13 @@ module.exports.product = async(req, res) => {
 
 module.exports.create = async(req, res) => {
     try {
+        if (!req.body.categoryId) {
+            return res.status(400).json({
+                success: false,
+                message: messages.REQUIRED_CATEGORY,
+            });
+        }
+
         const product = new Product({
             name: req.body.name,
             price: req.body.price,

@@ -30,12 +30,14 @@ module.exports.register = async(req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: hashedPassword,
+            role: req.body.role,
         });
 
         const newUser = await user.save();
 
         const accessToken = await createAccessToken(
             newUser._id,
+            newUser.role,
             environments.SECRET_TOKEN
         );
 
@@ -47,7 +49,6 @@ module.exports.register = async(req, res) => {
             user: result,
         });
     } catch (e) {
-        console.log(e);
         return res.status(500).json({
             success: false,
             message: messages.SERVER_ERROR,
@@ -80,6 +81,7 @@ module.exports.login = async(req, res) => {
 
         const accessToken = await createAccessToken(
             user._id,
+            user.role,
             environments.SECRET_TOKEN
         );
 
@@ -120,6 +122,7 @@ module.exports.loginAdmin = async(req, res) => {
 
         const accessToken = await createAccessToken(
             user._id,
+            user.role,
             environments.SECRET_TOKEN
         );
 

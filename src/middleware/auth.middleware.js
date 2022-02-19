@@ -15,7 +15,9 @@ const verifyToken = (req, res, next) => {
         }
 
         const decodedToken = jwt.decode(token, environments.SECRET_TOKEN);
+
         req.userId = decodedToken.userId;
+        req.userRole = decodedToken.userRole;
 
         next();
     } catch (e) {

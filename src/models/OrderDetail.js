@@ -13,6 +13,10 @@ const OrderDetailSchema = new Schema({
         type: Number,
         default: 0,
     },
+    categoryId: {
+        type: Types.ObjectId,
+        ref: "category",
+    },
     subTotal: {
         type: Number,
         default: 0,

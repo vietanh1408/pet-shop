@@ -12,6 +12,7 @@ const OrderSchema = new Schema({
     },
     byDate: {
         type: Date,
+        default: Date.now(),
     },
     total: {
         type: Number,

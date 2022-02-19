@@ -12,19 +12,24 @@ const ProductSchema = new Schema({
     },
     image1: {
         type: String,
+        default: null,
     },
     image2: {
         type: String,
+        default: null,
     },
     image3: {
         type: String,
+        default: null,
     },
     image4: {
         type: String,
+        default: null,
     },
     status: {
         type: Number,
         enum: [0, 1],
+        default: 0,
     },
     quantity: {
         type: Number,
@@ -33,6 +38,7 @@ const ProductSchema = new Schema({
     categoryId: {
         type: Types.ObjectId,
         ref: "category",
+        required: true,
     },
 }, {
     versionKey: false,

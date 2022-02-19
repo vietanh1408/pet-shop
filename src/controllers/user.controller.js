@@ -92,7 +92,7 @@ module.exports.update = async(req, res) => {
         if (!updatedUser) {
             return res.status(400).json({
                 success: false,
-                message: messages.USERNAME_NOT_EXIST,
+                message: messages.USER_NOT_EXIST,
             });
         }
 
