@@ -9,7 +9,7 @@ module.exports.connectDB = async() => {
             useCreateIndex: true,
             useFindAndModify: false,
         });
-        console.log("🔵 connected database !");
+        console.log("🔵🔵🔵 connect database success !");
     } catch (err) {
         console.log("🔴🔴🔴 connect database fail !");
     }

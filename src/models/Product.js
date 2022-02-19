@@ -1,5 +1,10 @@
 const { Schema, Types, model } = require("mongoose");
 
+const ImageSchema = new Schema({
+    publicId: String,
+    url: String,
+});
+
 const ProductSchema = new Schema({
     name: {
         type: String,
@@ -11,19 +16,19 @@ const ProductSchema = new Schema({
         default: 0,
     },
     image1: {
-        type: String,
+        type: ImageSchema,
         default: null,
     },
     image2: {
-        type: String,
+        type: ImageSchema,
         default: null,
     },
     image3: {
-        type: String,
+        type: ImageSchema,
         default: null,
     },
     image4: {
-        type: String,
+        type: ImageSchema,
         default: null,
     },
     status: {

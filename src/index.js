@@ -15,6 +15,7 @@ const productRoute = require("./routes/product.route");
 const categoryRoute = require("./routes/category.route");
 const orderRoute = require("./routes/order.route");
 const profileRoute = require("./routes/profile.route");
+const uploadRoute = require("./routes/upload.route");
 
 app.use(helmet());
 app.use(morgan("tiny"));
@@ -29,6 +30,7 @@ app.use("/api/products", productRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/profile", profileRoute);
+app.use("/api/upload", uploadRoute);
 
 connectDB();
 

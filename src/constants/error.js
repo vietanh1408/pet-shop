@@ -14,4 +14,6 @@ module.exports.messages = {
     ORDER_NOT_EXIST: "Đơn hàng không tồn tại",
     REQUIRED_CATEGORY: "Sản phẩm phải thuộc 1 danh mục",
     PROCESSING_ERROR: "Có lỗi trong quá trình xử lý, vui lòng thử lại sau",
+    UPLOAD_FAIL: "Không thể tải lên file, vui lòng thử lại sau",
+    FILE_NOT_EXIST: "File không tồn tại",
 };
