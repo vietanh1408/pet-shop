@@ -23,4 +23,6 @@ const OrderSchema = new Schema({
     timestamps: true,
 });
 
+OrderSchema.index({ code: 1 });
+
 module.exports = model("order", OrderSchema);

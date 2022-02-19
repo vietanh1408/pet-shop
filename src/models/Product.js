@@ -50,4 +50,6 @@ const ProductSchema = new Schema({
     timestamps: true,
 });
 
+ProductSchema.index({ name: 1 });
+
 module.exports = model("product", ProductSchema);

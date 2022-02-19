@@ -6,13 +6,17 @@ const Pagination = require("../helpers/pagination");
 module.exports.users = async(req, res) => {
     try {
         const userQuery = new Pagination(
-            User.find({}).select(["-password"]),
+            User.find({ username: { $regex: req.query.keyword } }).select([
+                "-password",
+            ]),
             req.query
         ).paginating();
 
         const users = await userQuery.query.sort({ username: 1 });
 
-        const total = await User.countDocuments({});
+        const total = await User.countDocuments({
+            username: { $regex: req.query.keyword },
+        });
 
         return res.status(200).json({
             success: true,

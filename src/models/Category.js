@@ -17,4 +17,6 @@ const CategorySchema = new Schema({
     timestamps: true,
 });
 
+CategorySchema.index({ name: 1 });
+
 module.exports = model("category", CategorySchema);
