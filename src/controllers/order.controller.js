@@ -7,15 +7,19 @@ const { calculateOrder } = require("../extensions/order");
 
 module.exports.orders = async(req, res) => {
     try {
+        const searchQuery = req.query.keyword ?
+            { code: { $regex: req.query.keyword, $options: "i" } } :
+            {};
+
         const orderQuery = new Pagination(
-            Order.find({ code: { $regex: req.query.keyword } }),
+            Order.find({...searchQuery }),
             req.query
         ).paginating();
 
         const orders = await orderQuery.query.sort({ createdAt: -1 });
 
         const total = await Order.countDocuments({
-            code: { $regex: req.query.keyword },
+            ...searchQuery,
         });
 
         return res.status(200).json({

@@ -4,7 +4,6 @@ const helmet = require("helmet");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { connectDB } = require("./utils/mongo.connect");
-
 const environments = require("./constants/environment");
 
 const app = express();
@@ -16,6 +15,7 @@ const categoryRoute = require("./routes/category.route");
 const orderRoute = require("./routes/order.route");
 const profileRoute = require("./routes/profile.route");
 const uploadRoute = require("./routes/upload.route");
+// const cartRoute = require("./routes/cart.route");
 
 app.use(helmet());
 app.use(morgan("tiny"));
@@ -31,6 +31,7 @@ app.use("/api/categories", categoryRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/upload", uploadRoute);
+// app.use("/api/cart", cartRoute);
 
 connectDB();
 

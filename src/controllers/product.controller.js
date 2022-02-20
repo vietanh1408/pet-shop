@@ -4,18 +4,22 @@ const Pagination = require("../helpers/pagination");
 
 module.exports.products = async(req, res) => {
     try {
+        const searchQuery = req.query.keyword ?
+            { name: { $regex: req.query.keyword, $options: "i" } } :
+            {};
+
         const productQuery = new Pagination(
-            Product.find({ name: { $regex: req.query.keyword } }).populate(
-                "categoryId", ["name", "description", "image"]
-            ),
+            Product.find({...searchQuery }).populate("categoryId", [
+                "name",
+                "description",
+                "image",
+            ]),
             req.query
         ).paginating();
 
         const products = await productQuery.query.sort({ createdAt: -1 });
 
-        const total = await Product.countDocuments({
-            name: { $regex: req.query.keyword },
-        });
+        const total = await Product.countDocuments({...searchQuery });
 
         return res.status(200).json({
             success: true,
