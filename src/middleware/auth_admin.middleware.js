@@ -1,6 +1,6 @@
 const { messages } = require("../constants/error");
 
-const verifyTokenAdmin = async(req, res, next) => {
+const verifyTokenAdmin = async (req, res, next) => {
     try {
         if (req.userRole === 0) {
             return res.status(403).json({
