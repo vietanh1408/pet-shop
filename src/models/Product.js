@@ -8,26 +8,17 @@ const ImageSchema = new Schema({
 const ProductSchema = new Schema({
     name: {
         type: String,
-        unique: true,
         max: 1024,
+    },
+    description: {
+        type: String,
+        default: null
     },
     price: {
         type: Number,
         default: 0,
     },
-    image1: {
-        type: ImageSchema,
-        default: null,
-    },
-    image2: {
-        type: ImageSchema,
-        default: null,
-    },
-    image3: {
-        type: ImageSchema,
-        default: null,
-    },
-    image4: {
+    image: {
         type: ImageSchema,
         default: null,
     },

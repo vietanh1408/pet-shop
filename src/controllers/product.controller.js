@@ -97,7 +97,7 @@ module.exports.create = async (req, res) => {
         const product = new Product({
             name: req.body.name,
             price: req.body.price,
-            image1: req.body.image,
+            image: req.body.image,
             status: req.body.status,
             quantity: req.body.quantity,
             categoryId: req.body.categoryId,

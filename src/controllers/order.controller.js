@@ -5,14 +5,14 @@ const { messages } = require("../constants/error");
 const { generateOrderCode } = require("../extensions/generateCode");
 const { calculateOrder } = require("../extensions/order");
 
-module.exports.orders = async(req, res) => {
+module.exports.orders = async (req, res) => {
     try {
         const searchQuery = req.query.keyword ?
             { code: { $regex: req.query.keyword, $options: "i" } } :
             {};
 
         const orderQuery = new Pagination(
-            Order.find({...searchQuery }),
+            Order.find({ ...searchQuery }),
             req.query
         ).paginating();
 
@@ -37,7 +37,7 @@ module.exports.orders = async(req, res) => {
     }
 };
 
-module.exports.order = async(req, res) => {
+module.exports.order = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
 
@@ -49,9 +49,9 @@ module.exports.order = async(req, res) => {
         }
 
         const orderDetails = await OrderDetail.find({
-                orderId: order._id,
-            })
-            .populate("productId", ["name", "price", "image1"])
+            orderId: order._id,
+        })
+            .populate("productId", ["name", "price", "image"])
             .populate("categoryId", ["name", "image"]);
 
         return res.status(200).json({
@@ -69,7 +69,7 @@ module.exports.order = async(req, res) => {
     }
 };
 
-module.exports.create = async(req, res) => {
+module.exports.create = async (req, res) => {
     try {
         const code = generateOrderCode(12);
 
@@ -96,7 +96,7 @@ module.exports.create = async(req, res) => {
         const newOrderDetails = [];
         const products = calculatedOrder.products;
         await Promise.all(
-            products.map(async(product) => {
+            products.map(async (product) => {
                 const orderDetail = new OrderDetail({
                     orderId: newOrder._id,
                     productId: product._id,
@@ -124,10 +124,10 @@ module.exports.create = async(req, res) => {
     }
 };
 
-module.exports.update = async(req, res) => {
+module.exports.update = async (req, res) => {
     try {
         const updatedOrder = await Order.findByIdAndUpdate(
-            req.body.orderId, {...req.body }, { new: true }
+            req.body.orderId, { ...req.body }, { new: true }
         );
 
         if (!updatedOrder) {
