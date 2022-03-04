@@ -3,6 +3,7 @@ const Product = require("../models/Product");
 const Pagination = require("../helpers/pagination");
 const { cloudinary } = require('../utils/cloudinary.connect');
 const environments = require("../constants/environment");
+const { uploadImage } = require("../extensions/upload");
 require('dotenv').config();
 
 module.exports.products = async (req, res) => {
@@ -75,22 +76,14 @@ module.exports.create = async (req, res) => {
         }
 
         if (req.body.image) {
-            const fileStr = req.body.image;
-
-            const uploadResponse = await cloudinary.uploader.upload(fileStr, {
-                folder: environments.CLOUD_FOLDER,
-            })
-
-            if (!(uploadResponse.public_id && uploadResponse.url)) {
+            const { error, result } = await uploadImage(req.body.image)
+            if (error) {
                 return res.status(400).json({
                     success: false,
                     message: 'Tải ảnh lên không thành công'
                 })
             } else {
-                req.body.image = {
-                    publicId: uploadResponse.public_id,
-                    url: uploadResponse.url
-                }
+                req.body.image = result
             }
         }
 
@@ -111,7 +104,6 @@ module.exports.create = async (req, res) => {
             product: newProduct,
         });
     } catch (e) {
-        console.log('e....', e)
         return res.status(500).json({
             success: false,
             message: messages.SERVER_ERROR,

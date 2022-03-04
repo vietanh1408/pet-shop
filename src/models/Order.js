@@ -18,6 +18,14 @@ const OrderSchema = new Schema({
         type: Number,
         default: 0,
     },
+    phoneNumber: {
+        type: String,
+        default: null
+    },
+    address: {
+        type: String,
+        default: null
+    }
 }, {
     versionKey: false,
     timestamps: true,
