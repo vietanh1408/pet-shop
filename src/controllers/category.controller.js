@@ -79,6 +79,7 @@ module.exports.create = async (req, res) => {
             category: newCategory,
         });
     } catch (e) {
+        console.log('e....', e)
         return res.status(500).json({
             success: false,
             message: messages.SERVER_ERROR,

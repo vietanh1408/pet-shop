@@ -1,5 +1,10 @@
 const { Schema, model } = require("mongoose");
 
+const ImageSchema = new Schema({
+    publicId: String,
+    url: String,
+});
+
 const CategorySchema = new Schema({
     name: {
         type: String,
@@ -10,7 +15,8 @@ const CategorySchema = new Schema({
         max: 1024,
     },
     image: {
-        type: String,
+        type: ImageSchema,
+        default: null
     },
 }, {
     versionKey: false,
