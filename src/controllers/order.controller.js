@@ -12,7 +12,7 @@ module.exports.orders = async (req, res) => {
             {};
 
         const orderQuery = new Pagination(
-            Order.find({ ...searchQuery }),
+            Order.find({ ...searchQuery }).populate('customer', ['username', 'phoneNumber']),
             req.query
         ).paginating();
 
@@ -85,7 +85,7 @@ module.exports.create = async (req, res) => {
         // create order
         const order = new Order({
             code,
-            customerId: calculatedOrder.customerId,
+            customer: calculatedOrder.customerId,
             total: calculatedOrder.total,
             byDate: Date.now(),
             phoneNumber: req.body.phoneNumber,
