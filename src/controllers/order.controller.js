@@ -39,7 +39,8 @@ module.exports.orders = async (req, res) => {
 
 module.exports.order = async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id);
+        const order = await Order.findById(req.params.id)
+            .populate('customer', ['username', 'phoneNumber', 'email']);
 
         if (!order) {
             return res.status(400).json({
@@ -52,7 +53,7 @@ module.exports.order = async (req, res) => {
             orderId: order._id,
         })
             .populate("productId", ["name", "price", "image"])
-            .populate("categoryId", ["name", "image"]);
+            .populate("categoryId", ["name", "image"])
 
         return res.status(200).json({
             success: true,
