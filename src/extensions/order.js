@@ -1,7 +1,7 @@
 const Product = require("../models/Product");
 const { Types } = require("mongoose");
 
-module.exports.calculateOrder = async(data) => {
+module.exports.calculateOrder = async (data) => {
     try {
         let error = false;
         const productIds = data.products.map((product) =>
@@ -21,6 +21,7 @@ module.exports.calculateOrder = async(data) => {
                         ...p,
                         ...doc._doc,
                         _id: doc._id,
+                        quantity: p.quantity
                     });
                 }
             });
