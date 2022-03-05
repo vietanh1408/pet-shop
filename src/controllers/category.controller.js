@@ -59,7 +59,7 @@ module.exports.create = async (req, res) => {
             if (error) {
                 return res.status(400).json({
                     success: false,
-                    message: 'Tải ảnh lên không thành công'
+                    message: messages.UPLOAD_FAIL
                 })
             } else {
                 req.body.image = result
@@ -79,7 +79,6 @@ module.exports.create = async (req, res) => {
             category: newCategory,
         });
     } catch (e) {
-        console.log('e....', e)
         return res.status(500).json({
             success: false,
             message: e.message
@@ -95,7 +94,7 @@ module.exports.update = async (req, res) => {
             if (error) {
                 return res.status(400).json({
                     success: false,
-                    message: 'Tải ảnh lên không thành công'
+                    message: messages.UPLOAD_FAIL
                 })
             } else {
                 req.body.image = result

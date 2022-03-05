@@ -16,5 +16,5 @@ module.exports.messages = {
     PROCESSING_ERROR: "Có lỗi trong quá trình xử lý, vui lòng thử lại sau",
     UPLOAD_FAIL: "Không thể tải lên file, vui lòng thử lại sau",
     FILE_NOT_EXIST: "File không tồn tại",
-    BLOG_NOT_EXIST: 'Blog không tồn tại'
+    BLOG_NOT_EXIST: 'Blog không tồn tại',
 };
