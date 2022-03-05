@@ -13,7 +13,7 @@ const verifyTokenAdmin = async (req, res, next) => {
     } catch (e) {
         return res.status(500).json({
             status: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };

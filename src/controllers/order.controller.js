@@ -121,10 +121,9 @@ module.exports.create = async (req, res) => {
             },
         });
     } catch (e) {
-        console.log(e)
         return res.status(500).json({
             status: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
@@ -149,7 +148,7 @@ module.exports.update = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             status: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
