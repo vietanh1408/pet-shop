@@ -32,7 +32,7 @@ module.exports.orders = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
@@ -64,7 +64,7 @@ module.exports.order = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
@@ -88,6 +88,8 @@ module.exports.create = async (req, res) => {
             customerId: calculatedOrder.customerId,
             total: calculatedOrder.total,
             byDate: Date.now(),
+            phoneNumber: req.body.phoneNumber,
+            address: req.body.address
         });
 
         const newOrder = await order.save();

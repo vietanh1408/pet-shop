@@ -4,7 +4,7 @@ const { createAccessToken } = require("../helpers/generateToken");
 const { hashPassword, comparePassword } = require("../helpers/hashPassword");
 const environments = require("../constants/environment");
 
-module.exports.register = async(req, res) => {
+module.exports.register = async (req, res) => {
     try {
         const existedEmail = await User.findOne({ email: req.body.email });
 
@@ -51,12 +51,12 @@ module.exports.register = async(req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
 
-module.exports.login = async(req, res) => {
+module.exports.login = async (req, res) => {
     try {
         const user = await User.findOne({
             username: req.body.username,
@@ -95,12 +95,12 @@ module.exports.login = async(req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
 
-module.exports.loginAdmin = async(req, res) => {
+module.exports.loginAdmin = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.body.username, role: 1 });
 
@@ -136,7 +136,7 @@ module.exports.loginAdmin = async(req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };

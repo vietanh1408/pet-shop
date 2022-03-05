@@ -35,7 +35,7 @@ module.exports.products = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
@@ -60,7 +60,7 @@ module.exports.product = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
@@ -106,13 +106,26 @@ module.exports.create = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
 
 module.exports.update = async (req, res) => {
     try {
+
+        if (req.body.image) {
+            const { error, result } = await uploadImage(req.body.image)
+            if (error) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Tải ảnh lên không thành công'
+                })
+            } else {
+                req.body.image = result
+            }
+        }
+
         const product = await Product.findByIdAndUpdate(
             req.body.productId, { ...req.body }, { new: true }
         );
@@ -124,7 +137,7 @@ module.exports.update = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
@@ -139,7 +152,7 @@ module.exports.delete = async (req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };

@@ -1,4 +1,9 @@
-const { Schema, model, Types } = require("mongoose");
+const { Schema, model } = require("mongoose");
+
+const ImageSchema = new Schema({
+    publicId: String,
+    url: String,
+});
 
 const UserSchema = new Schema({
     username: {
@@ -23,6 +28,10 @@ const UserSchema = new Schema({
         enum: [0, 1],
         default: 0,
     },
+    image: {
+        type: ImageSchema,
+        default: null
+    }
 }, {
     versionKey: false,
     timestamps: true,

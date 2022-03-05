@@ -1,23 +1,30 @@
-const Category = require("../models/Category");
 const { messages } = require("../constants/error");
+const Blog = require("../models/Blog");
 const Pagination = require("../helpers/pagination");
 const { uploadImage } = require("../extensions/upload");
 
-module.exports.categories = async (req, res) => {
+module.exports.blogs = async (req, res) => {
     try {
-        const categoryQuery = new Pagination(
-            Category.find({}),
+
+        const searchQuery = req.query.keyword ?
+            { title: { $regex: req.query.keyword, $options: "i" } } :
+            {};
+
+        const blogQuery = new Pagination(
+            Blog.find({ ...searchQuery }),
             req.query
         ).paginating();
 
-        const categories = await categoryQuery.query.sort({ name: 1 });
+        const blogs = await blogQuery.query.sort({ createdAt: -1 });
 
-        const total = await Category.countDocuments({});
+        const total = await Blog.countDocuments({
+            ...searchQuery
+        });
 
         return res.status(200).json({
             success: true,
             result: {
-                categories,
+                blogs,
                 total,
             },
         });
@@ -29,20 +36,13 @@ module.exports.categories = async (req, res) => {
     }
 };
 
-module.exports.category = async (req, res) => {
+module.exports.blog = async (req, res) => {
     try {
-        const category = await Category.findById(req.params.id);
-
-        if (!category) {
-            return res.status(400).json({
-                success: false,
-                message: messages.CATEGORY_NOT_EXIST,
-            });
-        }
+        const blog = await Blog.findById(req.params.id)
 
         return res.status(200).json({
             success: true,
-            category,
+            blog,
         });
     } catch (e) {
         return res.status(500).json({
@@ -54,6 +54,7 @@ module.exports.category = async (req, res) => {
 
 module.exports.create = async (req, res) => {
     try {
+
         if (req.body.image) {
             const { error, result } = await uploadImage(req.body.image)
             if (error) {
@@ -66,20 +67,19 @@ module.exports.create = async (req, res) => {
             }
         }
 
-        const category = new Category({
-            name: req.body.name,
-            description: req.body.description,
+        const blog = new Blog({
+            title: req.body.title,
+            url: req.body.url,
             image: req.body.image,
         });
 
-        const newCategory = await category.save();
+        const newBlog = await blog.save();
 
         return res.status(200).json({
             success: true,
-            category: newCategory,
+            blog: newBlog,
         });
     } catch (e) {
-        console.log('e....', e)
         return res.status(500).json({
             success: false,
             message: e.message
@@ -102,13 +102,20 @@ module.exports.update = async (req, res) => {
             }
         }
 
-        const category = await Category.findByIdAndUpdate(
-            req.body.categoryId, { ...req.body }, { new: true }
-        );
+        const updatedBlog = await Blog.findByIdAndUpdate(
+            req.body.id, { ...req.body }, { new: true }
+        )
+
+        if (!updatedBlog) {
+            return res.status(400).json({
+                success: false,
+                message: messages.BLOG_NOT_EXIST,
+            });
+        }
 
         return res.status(200).json({
             success: true,
-            category,
+            blog: updatedBlog,
         });
     } catch (e) {
         return res.status(500).json({
@@ -120,7 +127,7 @@ module.exports.update = async (req, res) => {
 
 module.exports.delete = async (req, res) => {
     try {
-        await Category.findByIdAndDelete(req.params.id);
+        await Blog.findByIdAndDelete(req.params.id);
 
         return res.status(200).json({
             success: true,

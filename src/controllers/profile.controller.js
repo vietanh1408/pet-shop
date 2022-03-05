@@ -1,7 +1,7 @@
 const { messages } = require("../constants/error");
 const User = require("../models/User");
 
-module.exports.profile = async(req, res) => {
+module.exports.profile = async (req, res) => {
     try {
         const profile = await User.findById(req.params.id);
 
@@ -19,15 +19,15 @@ module.exports.profile = async(req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
 
-module.exports.update = async(req, res) => {
+module.exports.update = async (req, res) => {
     try {
         const updatedUser = await User.findByIdAndUpdate(
-            req.body.profileId, {...req.body.data }, { new: true }
+            req.body.profileId, { ...req.body.data }, { new: true }
         ).select(["-password"]);
 
         if (!updatedUser) {
@@ -44,7 +44,7 @@ module.exports.update = async(req, res) => {
     } catch (e) {
         return res.status(500).json({
             success: false,
-            message: messages.SERVER_ERROR,
+            message: e.message
         });
     }
 };
