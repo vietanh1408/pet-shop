@@ -43,11 +43,12 @@ module.exports.calculateOrder = async (data) => {
             error = true;
         }
 
+
         // calculate total
-        const total = products.reduce(
+        const total = products.map(pro => pro.subTotal).reduce(
             (pre, cur) => {
-                return Number(pre.subTotal) + Number(cur.subTotal);
-            }, { subTotal: 0 }
+                return Number(pre) + Number(cur);
+            }, 0
         );
 
         return {

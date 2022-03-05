@@ -5,7 +5,7 @@ const OrderDetailSchema = new Schema({
         type: Types.ObjectId,
         ref: "order",
     },
-    productId: {
+    product: {
         type: Types.ObjectId,
         ref: "product",
     },
@@ -13,7 +13,7 @@ const OrderDetailSchema = new Schema({
         type: Number,
         default: 0,
     },
-    categoryId: {
+    category: {
         type: Types.ObjectId,
         ref: "category",
     },

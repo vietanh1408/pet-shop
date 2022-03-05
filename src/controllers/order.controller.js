@@ -52,8 +52,8 @@ module.exports.order = async (req, res) => {
         const orderDetails = await OrderDetail.find({
             orderId: order._id,
         })
-            .populate("productId", ["name", "price", "image"])
-            .populate("categoryId", ["name", "image"])
+            .populate("product", ["name", "price", "image"])
+            .populate("category", ["name", "image"])
 
         return res.status(200).json({
             success: true,
@@ -103,10 +103,10 @@ module.exports.create = async (req, res) => {
             products.map(async (product) => {
                 const orderDetail = new OrderDetail({
                     orderId: newOrder._id,
-                    productId: product._id,
+                    product: product._id,
                     productQuantity: product.quantity,
                     subTotal: product.subTotal,
-                    categoryId: product.categoryId,
+                    category: product.categoryId,
                 });
                 const result = await orderDetail.save();
                 newOrderDetails.push(result._doc);
@@ -121,6 +121,7 @@ module.exports.create = async (req, res) => {
             },
         });
     } catch (e) {
+        console.log(e)
         return res.status(500).json({
             status: false,
             message: messages.SERVER_ERROR,
