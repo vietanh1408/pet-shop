@@ -54,7 +54,7 @@ module.exports.category = async (req, res) => {
 
 module.exports.create = async (req, res) => {
     try {
-        if (req.body.image) {
+        if (req.body.image && typeof req.body.image === 'string') {
             const { error, result } = await uploadImage(req.body.image)
             if (error) {
                 return res.status(400).json({
@@ -89,7 +89,7 @@ module.exports.create = async (req, res) => {
 module.exports.update = async (req, res) => {
     try {
 
-        if (req.body.image) {
+        if (req.body.image && typeof req.body.image === 'string') {
             const { error, result } = await uploadImage(req.body.image)
             if (error) {
                 return res.status(400).json({
