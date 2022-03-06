@@ -24,6 +24,15 @@ module.exports.register = async (req, res) => {
             });
         }
 
+        const existedPhoneNumber = await User.findOne({ phoneNumber: req.body.phoneNumber });
+
+        if (existedPhoneNumber) {
+            return res.status(400).json({
+                success: false,
+                message: messages.DUPLICATED_PHONE_NUMBER,
+            });
+        }
+
         const hashedPassword = await hashPassword(req.body.password);
 
         const user = new User({
@@ -31,6 +40,7 @@ module.exports.register = async (req, res) => {
             email: req.body.email,
             password: hashedPassword,
             role: req.body.role,
+            phoneNumber: req.body.phoneNumber
         });
 
         const newUser = await user.save();

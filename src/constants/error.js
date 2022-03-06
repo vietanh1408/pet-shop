@@ -1,6 +1,7 @@
 module.exports.messages = {
     DUPLICATED_USERNAME: "Tên đăng nhập đã được sử dụng",
     DUPLICATED_EMAIL: "Email đã được sử dụng",
+    DUPLICATED_PHONE_NUMBER: "Số điện thoại đã được sử dụng",
     DUPLICATED_PRODUCT: "Sản phẩm đã tồn tại",
     SERVER_ERROR: "Lỗi máy chủ, vui lòng thử lại",
     AUTHORIZATION_ERROR: "Vui lòng đăng nhập để tiếp tục",
