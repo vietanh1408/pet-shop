@@ -31,6 +31,14 @@ const UserSchema = new Schema({
     image: {
         type: ImageSchema,
         default: null
+    },
+    address: {
+        type: String,
+        default: null
+    },
+    fullName: {
+        type: String,
+        default: null
     }
 }, {
     versionKey: false,

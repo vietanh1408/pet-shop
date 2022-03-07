@@ -152,3 +152,33 @@ module.exports.update = async (req, res) => {
         });
     }
 };
+
+module.exports.getOrdersByUser = async (req, res) => {
+    try {
+
+        const orderQuery = new Pagination(
+            Order.find({ customer: req.params.id }).populate('customer', ['username', 'phoneNumber']),
+            req.query
+        ).paginating();
+
+        const orders = await orderQuery.query.sort({ createdAt: -1 });
+
+        const total = await Order.countDocuments({
+            customer: req.params.id
+        });
+
+        return res.status(200).json({
+            success: true,
+            result: {
+                orders,
+                total,
+            },
+        });
+
+    } catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: e.message
+        });
+    }
+}
