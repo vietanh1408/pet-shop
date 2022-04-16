@@ -1,21 +1,21 @@
-const express = require("express");
+const express = require('express')
 
-const router = express.Router();
+const router = express.Router()
 
-const verifyToken = require("../middleware/auth.middleware");
+const verifyToken = require('../middleware/auth.middleware')
 
-const verifyTokenAdmin = require("../middleware/auth_admin.middleware");
+const verifyTokenAdmin = require('../middleware/auth_admin.middleware')
 
-const controller = require("../controllers/blog.controller");
+const controller = require('../controllers/blog.controller')
 
-router.get("/", verifyToken, controller.blogs);
+router.get('/', controller.blogs)
 
-router.get("/:id", verifyToken, controller.blog);
+router.get('/:id', controller.blog)
 
-router.post("/", verifyToken, verifyTokenAdmin, controller.create);
+router.post('/', verifyToken, verifyTokenAdmin, controller.create)
 
-router.put("/", verifyToken, verifyTokenAdmin, controller.update);
+router.put('/', verifyToken, verifyTokenAdmin, controller.update)
 
-router.delete("/:id", verifyToken, verifyTokenAdmin, controller.delete);
+router.delete('/:id', verifyToken, verifyTokenAdmin, controller.delete)
 
-module.exports = router;
+module.exports = router
