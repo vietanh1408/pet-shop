@@ -14,16 +14,9 @@ module.exports.products = async (req, res) => {
         }
       : {}
 
-    const productQuery = new Pagination(
-      Product.find({ ...searchQuery }).populate('categoryId', [
-        'name',
-        'description',
-        'image'
-      ]),
-      req.query
-    ).paginating()
-
-    const products = await productQuery.query.sort({ createdAt: -1 })
+    const products = await Product.find({ ...searchQuery }).sort({
+      createdAt: -1
+    })
 
     const total = await Product.countDocuments({ ...searchQuery })
 
