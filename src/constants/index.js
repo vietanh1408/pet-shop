@@ -5,5 +5,6 @@ module.exports.CHARACTERS_NUMBER = '0123456789'
 module.exports.SUFFIX_CODE = 'PET_SHOP_'
 module.exports.ORDER_STATUS = {
   PLACED: 'placed',
-  DELIVERED: 'delivered'
+  DELIVERED: 'delivered',
+  CANCELED: 'canceled'
 }
